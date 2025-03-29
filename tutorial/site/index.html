@@ -38,6 +38,25 @@ Lecturer: 钱梓洋
 
 Date: 2025/03/29
 
+<!--v-->
+## 前排警告⚠️
+
+我应该和在座的各位一样，也是第一次学习网络爬虫（~~当然也不排除有大佬学习过了~~），所以在所难免可能会有一些理解上的不足或者偏差，还请大家多多包涵🙏。在上课过程中如果有任何疑问的话，也可以随时打断我并向我发问🙋。
+
+<div class="fragment">
+
+不过以一个初学者的身份教大家还是有好处的：我能够更加设身处地地考虑到大家的知识水平，所以不会涉及到很难的内容；同时也有助于我自己巩固刚学的知识，所以是一个双赢的过程。
+
+</div>
+
+
+<!--v-->
+## 前置知识
+
+- Python 编程的基础部分
+- HTML：这个大家在内训课上学过了
+- （可选）计网相关知识：学过最好，没学过不影响爬虫入门，而且本次内训会稍微涉及一些相关知识
+
 
 <!--s-->
 <div class="middle center">
@@ -46,13 +65,61 @@ Date: 2025/03/29
 # Part 1. 引入
 <hr/>
 
+
+<!--v-->
+## Quiz
+
+<span style="color: red">思考：我在浏览器地址栏输入网址并敲回车，到网页加载出来这个过程中发生了哪几件事？</span>
+
+~~经典八股面试题~~
+
+<div class="fragment">
+
+1. DNS 解析：域名 -> IP 地址
+2. TCP 连接：三次握手
+3. 发送 HTTP 请求
+4. 服务器响应，返回 HTML 数据
+5. 解析 HTML & CSS：构建 DOM 树
+6. 页面渲染（布局、绘制、合成）
+7. 用户交互 & 异步请求
+
+</div>
+
+
+
 <!--v-->
 ## 什么是网络爬虫？
 
+<div class="fragment">
 
+>A Web crawler, sometimes called a spider or spiderbot and often shortened to crawler, is an Internet bot that systematically browses the World Wide Web and that is typically operated by search engines for the purpose of Web indexing (web spidering).
+>
+> -- by Wikipedia
+
+</div>
+
+
+<!--v-->
+## 什么是网络爬虫？
+
+从定义中，我们可以总结出网络爬虫的特征：
+
+<div class="fragment">
+
+- **Internet bot（网络机器人）**：在互联网上执行自动化任务的软件程序，通常用于模拟人类在互联网上的活动，比如发消息之类的
+
+</div>
+
+<div class="fragment">
+
+- **systematically browses the World Wide Web（系统性地浏览互联网）**：也就是说，根据程序员设计的**算法**获取**想要的**互联网信息
+
+</div>
 
 
 <div class="fragment">
+
+- **typically operated by search engines（通过搜索引擎操作）**：爬虫之所以有爬取网页内容的能力，很大程度上依赖于搜索引擎——它已经为各类网页建立好索引了，所以我们才能高效地找到想要的网页
 
 </div>
 
@@ -61,11 +128,49 @@ Date: 2025/03/29
 ## 为什么要学爬虫？
 
 
+- **获取数据，提高生产力**：爬虫最大的作用是自动获取互联网数据，无论是对科研（数据分析），还是对商业领域（市场分析）大有裨益
+- **对 CS 的学习**：学习爬虫的同时，我们也会深入了解 Web 相关的知识，熟练运用 Python 编程，甚至可以用于练习 Web 逆向工程（~~什么 CTF~~）
+- ~~**现实需求**：来自 yll 的指示，我们要做视频号的爬虫工作（要被剥削力（悲））~~
+
+
 
 <!--v-->
 ## Web Crawler v.s. Web Scraping
 
+这里有两个容易被混淆的概念，需要在这里和大家澄清一下：
 
+||**网络爬虫(web crawler)**|**网页抓取(web scraping)**|
+|:-|:-|:-|
+|定义|自动化遍历互联网，收集网页链接和数据|提取特定网页的结构化数据|
+|工作方式|递归爬取多个网页，遵循 URL 结构|解析特定网页的 HTML 内容|
+|目标|发现和索引新网页（类似搜索引擎）|提取特定内容（如新闻、价格、评论等）|
+|数据存储|存储网页全文，URL 结构|解析 HTML，提取特定字段|
+|应用场景|搜索引擎、学术爬虫|电商价格监测、新闻采集、社交数据分析|
+
+
+<!--v-->
+## 爬虫的问题
+
+- 可能会消耗大量服务器资源，因此有些网站不允许对其使用爬虫，比如 robots.txt 文件限制爬虫访问指定的部分页面。
+    - [robots.txt](https://en.wikipedia.org/wiki/Robots.txt)：一种支持 **机器人排外协议(Robot Exclusion Protocol)** （即**反爬规则**）的文件，文件格式为：
+
+        ```
+        # * 表示所有机器人/爬虫
+        User-agent: *
+        # 允许访问所有网页，等价语句为 Disallow: （空）
+        Allow: /
+        # 指定不允许访问的路径：
+        Disallow: /tmp/
+        Disallow: /junk/
+        # 指定具体文件：
+        Disallow: /dont/get/this/file.html
+        ```
+
+
+<!--v-->
+## 爬虫的问题
+
+- 在浩如烟海的互联网世界中，网页数量极其庞大，即便是最大的爬虫也无法为其建立索引，因此很难通过爬虫爬取 2000 年以前的网页内容，我们能够爬取的网页大多都是近几年的产物。
 
 
 <!--s-->
@@ -76,46 +181,233 @@ Date: 2025/03/29
 <hr/>
 
 
+<!--v-->
+## 大致原理
+
+我们可以将整个网络爬虫的过程大致分为三步：
+
+1. **抓取**
+    - 发送 HTTP 请求
+    - 获取网页内容
+2. **解析**
+    - （可选）处理动态内容
+3. **存储**
+
+<!--v-->
+## 大致原理（Cont.）
+
+<div style="text-align: center">
+    <img src="images/Web-Crawler-Architecture.png" width="70%" />
+</div>
+
 
 <!--v-->
 ## 抓取
+
+- **发送 HTTP 请求**
+    - 使用 `urllib`、`requests` 等库向目标网站发送请求（`GET` 或 `POST`）。
+    - 可能需要设置 `User-Agent`、Cookies、Headers 以模拟真实浏览器访问。
+- **获取网页内容**
+    - 服务器返回 HTML、JSON、XML 等格式的数据。
+    - 可能需要处理**状态码**（如 200 成功，403 禁止访问，404 未找到）。
+
+
+<!--v-->
+## 抓取（Cont.）
+
+为了帮助大家理解，在介绍第二步“解析”之前，先带大家认识一些之前没在内训课学过的关键概念：
+
+- HTTPÍ（只讲一些皮毛知识）
+    - HTTP 状态码
+- XML
+
+
+ <!--v-->
+## HTTP 概述
+
+**HTTP(HyperText Transfer Protocol)（超文本传输协议）**的概念：
+
+>**HTTP** 是一种用作获取诸如 HTML 文档这类资源的协议。它是 Web 上进行任何数据交换的基础，同时，也是一种**客户端—服务器**（client-server）协议，也就是说，**请求**是由接受方——通常是 **Web 浏览器**——发起的。完整**网页文档**通常由文本、布局描述、图片、视频、脚本等资源构成。
+
+<div class="fragment">
+
+客户端与服务端之间通过交换一个个独立的消息，而非数据流进行通信
+
+- **请求**(request)：由客户端发出的消息
+- **响应**(response)：由服务端发出的应答消息
+
+</div>
+
+ <!--v-->
+## HTTP 概述（Cont.）
+
+下图是从 TCP/IP 模型中的一部分，我们重点关注 HTTP 在其中发挥的作用：
+
+<div style="text-align: center">
+    <img src="images/HTTP-overview.svg" width="60%" />
+</div>
+
+参考资料：[MDN: HTTP 概述](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Guides/Overview)
+
+<!--v-->
+## 状态码
+
+HTTP （响应）状态码用来表明特定的 HTTP 请求是否完成。状态码可分为以下五类：
+
+1. **信息响应**（100–199）
+2. **成功响应**（200–299）
+3. **重定向消息**（300–399）
+4. **客户端错误响应**（400–499）
+5. **服务端错误响应**（500–599）
+
+常见的状态码有： `200 OK`, `400 Bad Request`, `403 Forbidden`, `404 Not Found`, `502 Bad Gateway` 等等。
+
+由于状态码很多，所以各位感兴趣的话可以在 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Status) 上了解这些状态码的含义。
+
+<!--v-->
+## XML
+
+>**XML**（Extensible Markup Language）是一种**类似于 HTML**，但是**没有使用预定义标记**的语言。因此，可以根据自己的设计需求定义专属的标记。这是一种将数据存储在一个可以存储、搜索和共享的格式中的强大方法。最重要的是，因为 XML 的基本格式是**标准化的**，如果你在本地或互联网上跨系统或平台共享或传输 XML，由于标准化的 XML 语法，接收者仍然可以解析数据。
+
+<div class="fragment">
+
+- 形如 HTML：学过 HTML 的各位看到 XML 有一种熟悉感
+
+</div>
+<div class="fragment">
+
+- 自定义：我们可以自己定义标签的内容，而不是使用 HTML 提供的诸如 `<p>`、`<div>`、`<img>` 之类的标签
+
+</div>
+<div class="fragment">
+
+- 标准化：大家采用同一套标准，具有高度的可移植性
+
+</div>
+
+
+<!--v-->
+## XML(Cont.)
+
+```xml
+<!-- 注释语法同 HTML -->
+
+<!-- XML 声明，传递元数据 -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 将 CSS 应用于文档，否则的话在浏览器呈现的是原始的 XML 内容 -->
+<?xml-stylesheet type="text/css" href="stylesheet.css"?>
+
+<!-- 用标签包裹内容 -->
+<message>
+    <warning>
+         Hello World
+    </warning>
+</message>
+```
+
+参考资料：[MDN: XML 简介](https://developer.mozilla.org/zh-CN/docs/Web/XML/Guides/XML_introduction)
 
 
 
 <!--v-->
 ## 解析
 
+- 使用 `BeautifulSoup` 或 `lxml` 提取 **HTML 结构**中的数据（如标题、图片、链接）。
+- 使用 `re` 进行**正则匹配**，或者 `json` 解析 **JSON 数据**。
+- 对于动态网页，我们可能想收集一些动态的信息（本节内训课不涉及这方面的内容❌）
+    - 部分网站通过 JavaScript 生成数据，需使用 `Selenium`、`Pyppeteer` 等模拟浏览器行为。
+    - 处理 AJAX 请求，直接获取 JSON 接口数据。
+
+
+<!--v-->
+## 正则表达式
+
+**正则表达式**(regular expression, regex)是一种字符串匹配和文本处理工具，它通过特定的规则来查找、匹配、替换文本。
+
+由于正则表达式的语法细节比较大，本次内训课肯定来不及展开介绍，但我强烈建议各位自学一下正则表达式，因为这门技术除了用在网络爬虫中，还有更为广泛的应用，比如数据清洗，日志分析，用户输入校验等等。
+
+推荐资料：
+
+- [regex101](https://regex101.com/)：检查正则表达式语法
+- [RegEX cheatsheet](https://cheatsheets.zip/regex)：语法参考表，包含了所有常用语法
 
 
 <!--v-->
 ## 存储
 
+- 保存到 CSV、Excel、JSON 等文件。
+- 存入 SQLite、MySQL、MongoDB 等**数据库**。
+
+
+
+<!--v-->
+## 在进入实操环节前🤔
+
+想必各位在听到网络爬虫的时候，第一反应就是想用 Python 实现爬虫功能，但为什么我们要用 Python 构建网络爬虫呢？
+
+<div class="fragment">
+
+~~所以我将这个问题丢给了 ChatGPT，它给出了如下解答：~~
+
+<div style="text-align: center">
+    <img src="images/why-py.png" width="80%" />
+</div>
+
+</div>
 
 <!--s-->
 <div class="middle center">
 <div style="width: 100%">
 
 # Part 3. 一些常用的 Python 库
+
+（实操环节）
+
 <hr/>
 
 
 <!--v-->
 ## 标准库 `urllib`
 
+`urllib` 是 Python 内置的 HTTP 请求库，用于处理网页爬取、网络请求、URL 解析等操作。它不依赖外部库，适用于轻量级爬虫和简单的数据抓取任务。
+
+请大家阅读 `urllib-test.py` 文件，并看我的演示！
 
 
 <!--v-->
 ## 第三方库 `Requests`
 
+和 `urllib` 一样，`Requests` 库也用于请求网页。但由于 `Requests` 库不仅具备 `urllib` 库的全部功能，而且它的语法更加简单易懂，所以在实际项目开发中，我们更多的是使用 `Requests` 库，而不是 `urllib` 库。
+
+用命令行安装：
+
+```sh
+$ pip install requests
+```
+
+请大家阅读 `requests-test.py` 文件，并看我的演示！
 
 <!--v-->
 ## 第三方库 `BeautifulSoup`
 
+`BeautifulSoup` 是一个主要用于解析和处理 HTML 或 XML 文档的 Python 库，具有一下核心功能：
 
-
+- HTML/XML 文档解析，提取内容：提供了 `html.parser`, `lxml`, `html5lib` 等解析器
+- 查找元素：`find()`, `findall()` 方法，也可以按 `id`, `class` 查找元素
+- 访问 DOM 树：访问父元素(`.parent`)、子元素(`.children`)、兄弟元素(`.next_sibling`)等
+- 修改文档
 
 <!--v-->
-## 第三方库 `Scrapy`
+## 第三方库 `BeautifulSoup`（Cont.）
+
+用命令行安装：
+
+```sh
+$ pip install bs4
+```
+
+请大家阅读 `bs-test.py` 文件，并看我的演示！
 
 
 <!--s-->
@@ -129,10 +421,22 @@ Date: 2025/03/29
 <!--v-->
 ## 今天我们学了啥？
 
+- 简单了解了网络爬虫的概念和原理
+- 了解了最常用的一些 Python 爬虫库
+- 顺便学了一些 Web 相关的小知识
+
+
 
 <!--v-->
 ## In the Future
 
+到目前为止，我们接触的只是网络爬虫的一层皮毛，前面讲的内容都是纸上谈兵。要想真正掌握网络爬虫这项技术，需要我们多实操，自己动手做一些爬虫小项目，这种小项目网上到处都是，大家可以选择感兴趣的项目做做看。
+
+<div class="fragment">
+
+注意⚠️：请注意法律边界，不要用网络爬虫做一些违法犯罪的事情，比如收集一些明令禁止不得收集的数据，甚至倒卖爬下来的数据等等，否则后果一律自负。
+
+</div>
 
 
 <!--v-->
@@ -142,9 +446,9 @@ Date: 2025/03/29
     - [Web Crawler](https://en.wikipedia.org/wiki/Web_crawler#Open-source_crawlers)
     - [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping)    
 - 入门教程：
-    - [0基础快速上手Python网络爬虫（纯干货）](https://zhuanlan.zhihu.com/p/621238247)
+    - [0基础快速上手 Python 网络爬虫（纯干货）](https://zhuanlan.zhihu.com/p/621238247)
     - [小白如何入门 Python 爬虫？](https://zhuanlan.zhihu.com/p/77560712)
-    - [Python入门网络爬虫之精华版](https://github.com/lining0806/PythonSpiderNotes)
+    - [Python 入门网络爬虫之精华版](https://github.com/lining0806/PythonSpiderNotes)
 - 官方文档：
     - [`urllib`](https://docs.python.org/3/library/urllib.html)
     - [`Requests`](https://requests.readthedocs.io/en/latest/)
