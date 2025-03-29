@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>网络爬虫入门</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/simple.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/github.css" />
+
+    <link rel="stylesheet" href="./assets/custom.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="<!--s-->" data-separator-vertical="<!--v-->">
+          <textarea data-template>
+            
+
+
+<div class="middle center title">
+<div style="width: 100%">
+
+
+# 网络爬虫入门
+
+技术部微信小程序/爬虫小组 Lec 3
+
+<hr/>
+
+
+
+Lecturer: 钱梓洋
+
+Date: 2025/03/29
+
+
+<!--s-->
+<div class="middle center">
+<div style="width: 100%">
+
+# Part 1. 引入
+<hr/>
+
+<!--v-->
+## 什么是网络爬虫？
+
+
+
+
+<div class="fragment">
+
+</div>
+
+
+<!--v-->
+## 为什么要学爬虫？
+
+
+
+<!--v-->
+## Web Crawler v.s. Web Scraping
+
+
+
+
+<!--s-->
+<div class="middle center">
+<div style="width: 100%">
+
+# Part 2. 原理介绍
+<hr/>
+
+
+
+<!--v-->
+## 抓取
+
+
+
+<!--v-->
+## 解析
+
+
+
+<!--v-->
+## 存储
+
+
+<!--s-->
+<div class="middle center">
+<div style="width: 100%">
+
+# Part 3. 一些常用的 Python 库
+<hr/>
+
+
+<!--v-->
+## 标准库 `urllib`
+
+
+
+<!--v-->
+## 第三方库 `Requests`
+
+
+<!--v-->
+## 第三方库 `BeautifulSoup`
+
+
+
+
+<!--v-->
+## 第三方库 `Scrapy`
+
+
+<!--s-->
+<div class="middle center">
+<div style="width: 100%">
+
+# Part 4. 总结
+<hr/>
+
+
+<!--v-->
+## 今天我们学了啥？
+
+
+<!--v-->
+## In the Future
+
+
+
+<!--v-->
+## 参考资料
+
+- 维基百科：
+    - [Web Crawler](https://en.wikipedia.org/wiki/Web_crawler#Open-source_crawlers)
+    - [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping)    
+- 入门教程：
+    - [0基础快速上手Python网络爬虫（纯干货）](https://zhuanlan.zhihu.com/p/621238247)
+    - [小白如何入门 Python 爬虫？](https://zhuanlan.zhihu.com/p/77560712)
+    - [Python入门网络爬虫之精华版](https://github.com/lining0806/PythonSpiderNotes)
+- 官方文档：
+    - [`urllib`](https://docs.python.org/3/library/urllib.html)
+    - [`Requests`](https://requests.readthedocs.io/en/latest/)
+    - [`BeautifulSoup`](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+    - [`Scrapy`](https://docs.scrapy.org/en/latest/)
+
+
+
+
+<!--s-->
+<div class="middle center title">
+<div style="width: 100%">
+
+# Thanks for Watching!
+
+<hr/>
+
+Any Questions?
+          </textarea>
+        </section>
+      </div>
+    </div>   
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.KaTeX
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","transitionSpeed":"fast","center":false,"slideNumber":"c/t","width":1000,"height":700,"_":["main.md"],"scripts":"https://cdn.tonycrane.cc/heti/heti.js,heti_worker.js","template":"template.html","static":"../site","assets-dir":"assets","assetsDir":"assets"}, queryOptions);
+    </script>
+
+    <script src="https://cdn.tonycrane.cc/heti/heti.js"></script>
+    <script src="./assets/heti_worker.js"></script>
+
+    <script>
+      Reveal.initialize(options).then(() => {
+        document.querySelector(".backgrounds").setAttribute("style", document.querySelector(".slides").style.cssText);
+      });
+      Reveal.on('overviewshown', event => {
+        document.querySelector(".backgrounds").setAttribute("style", "");
+      });
+      Reveal.on('overviewhidden', event => {
+        document.querySelector(".backgrounds").setAttribute("style", document.querySelector(".slides").style.cssText);
+      });
+      Reveal.on('resize', event => {
+        document.querySelector(".backgrounds").setAttribute("style", document.querySelector(".slides").style.cssText);
+      });
+    </script>
+  </body>
+</html>
